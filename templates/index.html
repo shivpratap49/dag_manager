@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DAG File Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            margin-bottom: 30px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #eee;
+        }
+        a {
+            margin-right: 10px;
+        }
+        input[type="submit"] {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 6px 10px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+    <h1>DAG File Manager</h1>
+
+    <!-- Upload Form -->
+    <h3>Upload New DAG File (.py only)</h3>
+    <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".py" required>
+        <input type="submit" value="Upload">
+    </form>
+
+    <!-- List of .py Files -->
+    <h3>Available DAG Files</h3>
+    {% if files %}
+    <table>
+        <tr>
+            <th>Filename</th>
+            <th>Actions</th>
+        </tr>
+        {% for file in files %}
+        <tr>
+            <td>{{ file }}</td>
+            <td>
+                <a href="{{ url_for('edit', filename=file) }}">Edit</a>
+                <form action="{{ url_for('delete', filename=file) }}" method="post" style="display:inline;">
+                    <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete {{ file }}?');">
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p>No DAG files found in the directory.</p>
+    {% endif %}
+</body>
+</html>
