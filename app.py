@@ -9,8 +9,8 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = DAGS_FOLDER
 
 # --- BASIC AUTH ---
-USERNAME = "admin"
-PASSWORD = "IAMSP"  # Change this to a secure password!
+USERNAME = *****
+PASSWORD = *****  # Change this to a secure password!
 
 def check_auth(username, password):
     return username == USERNAME and password == PASSWORD
